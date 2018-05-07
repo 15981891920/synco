@@ -4,7 +4,6 @@
 package com.synco.oa.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.synco.oa.pojo.User;
 

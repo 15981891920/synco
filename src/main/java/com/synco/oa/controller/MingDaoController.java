@@ -3,6 +3,7 @@
  */
 package com.synco.oa.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.synco.oa.pojo.Task;
 import com.synco.oa.pojo.User;
 import com.synco.oa.pojo.tasks;
+import com.synco.oa.service.TaskService;
 import com.synco.oa.service.UserMapperService;
 import com.synco.oa.util.Config;
 import com.synco.oa.util.HttpClientUtils;
@@ -35,6 +37,9 @@ public class MingDaoController {
 
 	@Resource
 	private UserMapperService userMapperService;
+
+	@Resource
+	private TaskService taskService;
 
 	/**
 	 * 获取URL(登陆授权)
@@ -124,11 +129,14 @@ public class MingDaoController {
 				+ "&project_id=all&page_index=1&page_size=20&filter_type=6&status=0&tag_ids=&without_tag=false&sort=10&is_star=false&time_format=true&format=json&account=true";
 		String result = HttpClientUtils.get(urls.toString(), "UTF-8");
 		System.out.println("网址链接" + urls.toString());
-
 		List<Task> tt = JSONObject.parseArray(JsonUtil.getJsonPojo(result), Task.class);
-		for (Task task : tt) {
-			for (tasks tasks : task.getTasks()) {
-				System.out.println(tasks.getTask_id());
+		Task task = new Task();
+		SimpleDateFormat simdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for (Task taskJson : tt) {
+			for (tasks tasks : taskJson.getTasks()) {
+				task.setTask_id(tasks.getTask_id());
+				System.out.println(tasks.getCreated_time());
+				taskService.findTaskInsertTime(task, tasks.getCreated_time());
 			}
 		}
 		return result;

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.synco.oa.dao.UserMapper">
+
+	<!-- 第一次登陆新增用户id,账户id,积分为0 -->
+	<insert id="inserUserInfoId" parameterType="User">
+		INSERT INTO
+		`user`(user_id,account_id,user_integral)
+		VALUES(#{user_id},#{account_id},#{user_integral})
+	</insert>
+	<!-- 查询用户 -->
+	<select id="selectUser" resultType="int" parameterType="User">
+		SELECT
+		COUNT(1) FROM `user`
+		WHERE user_id=#{user_id}
+	</select>
+
+</mapper>

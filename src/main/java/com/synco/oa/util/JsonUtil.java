@@ -3,9 +3,7 @@
  */
 package com.synco.oa.util;
 
-
 import com.alibaba.fastjson.JSONObject;
-
 
 /**
  * @author LiQian
