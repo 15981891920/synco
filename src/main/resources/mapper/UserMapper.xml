@@ -15,5 +15,11 @@
 		COUNT(1) FROM `user`
 		WHERE user_id=#{user_id}
 	</select>
-
+	
+	
+	<select id="findUserIdbyAid" parameterType="String" resultType="String">
+		select account_id
+		from user
+		where user_id = #{uid}
+	</select>
 </mapper>

@@ -13,4 +13,25 @@
 		select
 		max(task_inserttime) from task
 	</select>
+
+	<select id="findTaskIntegral" resultType="Integer">
+		select task_integral
+		from task where
+		task_id = #{task_id}
+	</select>
+
+	<select id="findTaskId" resultType="String">
+		select task_id
+		from task where
+		task_id = #{task_id}
+	</select>
+
+	<select id="taskStateList" resultType="String">
+		select taskstate_name,id
+		from
+		taskstate where id = (select task_taskstate_id
+		from task where
+		task_id =
+		#{task_id})
+	</select>
 </mapper>

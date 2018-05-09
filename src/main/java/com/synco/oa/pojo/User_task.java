@@ -5,14 +5,18 @@ package com.synco.oa.pojo;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * @author LiQian 任务子表实体类
  */
 public class User_task implements Serializable {
 	private Integer id;
-	private Integer user_id;
-	private Integer task_id;
+	@JSONField(name = "user_id")
+	private String user_id;
+	private String task_id;
 	private Integer taskrole_id;
+	private Integer userIntegral;
 
 	public Integer getId() {
 		return id;
@@ -22,19 +26,19 @@ public class User_task implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getUser_id() {
+	public String getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(Integer user_id) {
+	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
 
-	public Integer getTask_id() {
+	public String getTask_id() {
 		return task_id;
 	}
 
-	public void setTask_id(Integer task_id) {
+	public void setTask_id(String task_id) {
 		this.task_id = task_id;
 	}
 
@@ -44,6 +48,14 @@ public class User_task implements Serializable {
 
 	public void setTaskrole_id(Integer taskrole_id) {
 		this.taskrole_id = taskrole_id;
+	}
+
+	public Integer getUserIntegral() {
+		return userIntegral;
+	}
+
+	public void setUserIntegral(Integer userIntegral) {
+		this.userIntegral = userIntegral;
 	}
 
 }

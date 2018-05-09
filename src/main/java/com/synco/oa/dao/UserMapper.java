@@ -4,6 +4,7 @@
 package com.synco.oa.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.synco.oa.pojo.User;
 
@@ -24,4 +25,18 @@ public interface UserMapper {
 	 */
 	int selectUser(User user);
 
+	/**
+	 * 修改用户总积分
+	 * 
+	 * @return
+	 */
+	int editUserIntegral(@Param("integral") Integer integral);
+
+	/**
+	 * 根据负责人账户id查询用户id
+	 * 
+	 * @param Aid
+	 * @return
+	 */
+	String findUserIdbyAid(@Param("uid") String uid);
 }

@@ -32,6 +32,11 @@ public class UserMapperServiceImpl implements UserMapperService{
 		// TODO Auto-generated method stub
 		return userMapper.selectUser(user);
 	}
+
+	@Override
+	public String findUserIdbyAid(String uid) {
+		return userMapper.findUserIdbyAid(uid);
+	}
 	
 	
 }
