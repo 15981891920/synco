@@ -74,15 +74,13 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public List<Task> taskStateList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Task> taskStateListAll() {
+		return taskMapper.taskStateListAll();
 	}
 
 	@Override
 	public Integer editTaskState(String task_id, Integer taskState) {
-		// TODO Auto-generated method stub
-		return 0;
+		return taskMapper.editTaskState(task_id, taskState);
 	}
 
 	@Override

@@ -20,11 +20,10 @@ public class User implements Serializable {
 	@JSONField(name = "account_id")
 	private String account_id;
 	private String avatar;
-	private Float user_integral;
+	private Integer user_integral;
 	private String user_token;
 	private String user_flush_token;
 	private String full_name;
-	
 
 	// private String user_username;
 	// private String user_phone;
@@ -63,11 +62,11 @@ public class User implements Serializable {
 		this.account_id = account_id;
 	}
 
-	public Float getUser_integral() {
+	public Integer getUser_integral() {
 		return user_integral;
 	}
 
-	public void setUser_integral(Float user_integral) {
+	public void setUser_integral(Integer user_integral) {
 		this.user_integral = user_integral;
 	}
 

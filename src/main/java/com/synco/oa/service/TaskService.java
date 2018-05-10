@@ -50,7 +50,7 @@ public interface TaskService {
 	 * 
 	 * @return
 	 */
-	List<Task> taskStateList();
+	List<Task> taskStateListAll();
 
 	/**
 	 * 修改任务状态

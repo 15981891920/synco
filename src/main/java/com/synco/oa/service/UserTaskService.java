@@ -9,7 +9,7 @@ public interface UserTaskService {
 	 * 
 	 * @return
 	 */
-	int InsertUserTask(User_task userTask);
+	Integer InsertUserTask(User_task userTask);
 
 	/**
 	 * 新增判断
@@ -37,7 +37,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
-	int findUserIntegralByTask(String user_id, String task_id);
+	Integer findUserIntegralByTask(User_task usertask);
 
 	/**
 	 * 修改个人所得分
@@ -46,7 +46,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
-	int editUserIntegralByTask(String user_id, String task_id);
+	Integer editUserIntegralByTask(User_task usertask);
 
 	/**
 	 * 查询用户权限
@@ -55,7 +55,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
-	int findUsertaskrole(String user_id, String task_id);
+	Integer findUsertaskrole(String user_id, String task_id);
 
 	/**
 	 * 修改用户权限
@@ -64,5 +64,5 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
-	int editUsertaskrole(String user_id, String task_id);
+	Integer editUsertaskrole(String user_id, String task_id);
 }

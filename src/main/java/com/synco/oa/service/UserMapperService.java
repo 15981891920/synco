@@ -18,4 +18,19 @@ public interface UserMapperService {
 	 * @return
 	 */
 	String findUserIdbyAid(String uid);
+
+	/**
+	 * 查询个人总积分
+	 * 
+	 * @return
+	 */
+	Integer findUserIntegral(String userid);
+
+	/**
+	 * 修改用户总积分
+	 * 
+	 * @return
+	 */
+	int editUserIntegral(User user);
+
 }

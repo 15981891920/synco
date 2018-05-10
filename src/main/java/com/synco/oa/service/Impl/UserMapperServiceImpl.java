@@ -16,20 +16,18 @@ import com.synco.oa.service.UserMapperService;
  *
  */
 @Service("UserMapperServiceImpl")
-public class UserMapperServiceImpl implements UserMapperService{
-	
+public class UserMapperServiceImpl implements UserMapperService {
+
 	@Resource
 	private UserMapper userMapper;
 
 	@Override
 	public int inserUserInfoId(User user) {
-		// TODO Auto-generated method stub
 		return userMapper.inserUserInfoId(user);
 	}
 
 	@Override
 	public int selectUser(User user) {
-		// TODO Auto-generated method stub
 		return userMapper.selectUser(user);
 	}
 
@@ -37,6 +35,15 @@ public class UserMapperServiceImpl implements UserMapperService{
 	public String findUserIdbyAid(String uid) {
 		return userMapper.findUserIdbyAid(uid);
 	}
-	
-	
+
+	@Override
+	public Integer findUserIntegral(String userid) {
+		return userMapper.findUserIntegral(userid);
+	}
+
+	@Override
+	public int editUserIntegral(User user) {
+		return userMapper.editUserIntegral(user);
+	}
+
 }

@@ -23,7 +23,8 @@ public class Task implements Serializable {
 	private Float task_customer_score;
 	private Float task_admin_score;
 	private Date task_inserttime;
-
+	
+	
 	public Integer getId() {
 		return id;
 	}

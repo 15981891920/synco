@@ -21,4 +21,20 @@
 		where
 		task_id = #{task_id}
 	</select>
+
+	<select id="findUserIntegralByTask" resultType="Integer" parameterType="User_task">
+		select
+		user_integral from user_task where
+		user_id=#{user_id}
+		and
+		task_id=#{task_id}
+	</select>
+
+	<update id="editUserIntegralByTask" parameterType="User_task">
+		update
+		user_task set
+		user_integral = #{userIntegral}
+		where user_id=#{user_id}
+		and task_id=#{task_id}
+	</update>
 </mapper>

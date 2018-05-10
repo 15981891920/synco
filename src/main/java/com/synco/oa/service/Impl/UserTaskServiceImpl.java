@@ -19,7 +19,7 @@ public class UserTaskServiceImpl implements UserTaskService {
 	UserTaskMapper userTaskMapper;
 
 	@Override
-	public int InsertUserTask(User_task userTask) {
+	public Integer InsertUserTask(User_task userTask) {
 		return userTaskMapper.InsertUserTask(userTask);
 	}
 
@@ -49,25 +49,23 @@ public class UserTaskServiceImpl implements UserTaskService {
 	}
 
 	@Override
-	public int findUserIntegralByTask(String user_id, String task_id) {
+	public Integer findUserIntegralByTask(User_task usertask) {
+		return userTaskMapper.findUserIntegralByTask(usertask);
+	}
+
+	@Override
+	public Integer editUserIntegralByTask(User_task usertask) {
+		return userTaskMapper.editUserIntegralByTask(usertask);
+	}
+
+	@Override
+	public Integer findUsertaskrole(String user_id, String task_id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int editUserIntegralByTask(String user_id, String task_id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int findUsertaskrole(String user_id, String task_id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int editUsertaskrole(String user_id, String task_id) {
+	public Integer editUsertaskrole(String user_id, String task_id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

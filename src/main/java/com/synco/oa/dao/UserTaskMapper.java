@@ -39,7 +39,7 @@ public interface UserTaskMapper {
 	 * @param task_id
 	 * @return
 	 */
-	int findUserIntegralByTask(@Param("user_id") String user_id, @Param("task_id") String task_id);
+	int findUserIntegralByTask(User_task usertask);
 
 	/**
 	 * 修改个人所得分
@@ -48,7 +48,7 @@ public interface UserTaskMapper {
 	 * @param task_id
 	 * @return
 	 */
-	int editUserIntegralByTask(@Param("user_id") String user_id, @Param("task_id") String task_id);
+	int editUserIntegralByTask(User_task usertask);
 
 	/**
 	 * 查询用户权限

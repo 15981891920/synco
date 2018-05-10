@@ -1,7 +1,9 @@
 package com.synco.oa.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -84,13 +86,32 @@ public class MingDaoController {
 		if (nums == 1) {
 			return result;
 		} else {
-			pojo.setUser_integral(0.0f);
+			pojo.setUser_integral(0);
 			nums = userMapperService.inserUserInfoId(pojo);
 			if (nums >= 1) {
 				result = "OK数据新增成功";
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 获取当前登陆用户的总积分
+	 * 
+	 * @param access_token
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getUserIntegral")
+	@ResponseBody
+	public Map<String, Object> getUserIntegral(String access_token) throws Exception {
+		User userinfo = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User.class);
+		String userid = userinfo.getUser_id();
+		int userIn = userMapperService.findUserIntegral(userid);
+		Map<String, Object> userMap = new HashMap<>();
+		userMap.put("user_id", userid);
+		userMap.put("userIntegral", userIn);
+		return userMap;
 	}
 
 	/**
