@@ -2,6 +2,9 @@ package com.synco.oa.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.synco.oa.pojo.Task;
 
 public interface TaskService {
@@ -12,11 +15,13 @@ public interface TaskService {
 	 * @param task
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer inserTaskInfoId(Task task);
 
 	/**
 	 * 查询最后一次插入时间
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer findTaskInsertTime(Task task, String createdTime, String updateTime, String task_id);
 
 	/**
@@ -25,6 +30,7 @@ public interface TaskService {
 	 * @param task_id
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	String findTaskId(String task_id);
 
 	/**
@@ -34,6 +40,7 @@ public interface TaskService {
 	 * @param integral
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer findTaskIntegral(String task_id);
 
 	/**
@@ -42,7 +49,7 @@ public interface TaskService {
 	 * @param task_id
 	 * @return
 	 */
-
+	@Transactional(propagation = Propagation.REQUIRED)
 	String taskStateList(String task_id);
 
 	/**
@@ -50,6 +57,7 @@ public interface TaskService {
 	 * 
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	List<Task> taskStateListAll();
 
 	/**
@@ -58,6 +66,7 @@ public interface TaskService {
 	 * @param taskState
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer editTaskState(String task_id, Integer taskState);
 
 	/**
@@ -66,6 +75,7 @@ public interface TaskService {
 	 * @param json
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	String TaskJson(String json, String taskfen);
 
 }

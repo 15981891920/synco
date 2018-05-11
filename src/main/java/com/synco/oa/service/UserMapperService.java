@@ -1,5 +1,8 @@
 package com.synco.oa.service;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.synco.oa.pojo.User;
 
 /**
@@ -7,8 +10,20 @@ import com.synco.oa.pojo.User;
  */
 public interface UserMapperService {
 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	int inserUserInfoId(User user);
 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	int selectUser(User user);
 
 	/**
@@ -17,6 +32,7 @@ public interface UserMapperService {
 	 * @param Aid
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	String findUserIdbyAid(String uid);
 
 	/**
@@ -24,6 +40,7 @@ public interface UserMapperService {
 	 * 
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer findUserIntegral(String userid);
 
 	/**
@@ -31,6 +48,7 @@ public interface UserMapperService {
 	 * 
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	int editUserIntegral(User user);
 
 }

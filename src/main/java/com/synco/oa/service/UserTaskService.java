@@ -2,6 +2,9 @@ package com.synco.oa.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.synco.oa.pojo.User_task;
 
 public interface UserTaskService {
@@ -11,6 +14,7 @@ public interface UserTaskService {
 	 * 
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer InsertUserTask(User_task userTask);
 
 	/**
@@ -22,6 +26,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer findTaskInsertTime(User_task userTask, String createdTime, String updateTime, String task_id);
 
 	/**
@@ -30,6 +35,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	String findTaskId(User_task usertask);
 
 	/**
@@ -38,6 +44,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	List<User_task> findTaskIdByUserId(String user_id);
 
 	/**
@@ -47,6 +54,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer findUserIntegralByTask(User_task usertask);
 
 	/**
@@ -56,6 +64,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer editUserIntegralByTask(User_task usertask);
 
 	/**
@@ -65,6 +74,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer findUsertaskrole(String user_id, String task_id);
 
 	/**
@@ -74,5 +84,6 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	Integer editUsertaskrole(String user_id, String task_id);
 }
