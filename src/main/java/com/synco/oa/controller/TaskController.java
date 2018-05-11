@@ -14,7 +14,6 @@ import com.synco.oa.pojo.User_task;
 import com.synco.oa.service.TaskService;
 import com.synco.oa.service.UserMapperService;
 import com.synco.oa.service.UserTaskService;
-import com.synco.oa.util.JsonUtil;
 
 @Controller
 @RequestMapping("/Tast")
@@ -64,16 +63,16 @@ public class TaskController {
 	 */
 	@RequestMapping("/taskStart")
 	@ResponseBody
-	public String taskStart(String taskid, String integral) {
-		List<User_task> tt = JSONObject.parseArray(JsonUtil.getJsonPojo(integral), User_task.class);
+	public String taskStart(String taskJson) {
+		List<User_task> tt = JSONObject.parseArray(taskJson, User_task.class);
 		for (User_task user_task : tt) {
 			if (userTaskService.editUserIntegralByTask(user_task) > 0) {
-				if (editTaskState(taskid, 2).equals("OK")) {
-					return "OK";
+				if (editTaskState(user_task.getTask_id(), 2).equals("ON")) {
+					return "NO";
 				}
 			}
 		}
-		return "NO";
+		return "OK";
 	}
 
 	/**
@@ -85,13 +84,16 @@ public class TaskController {
 	 */
 	@RequestMapping("/taskSettlement")
 	@ResponseBody
-	public String taskSettlement(User_task usertask) {
-		if (userTaskService.editUserIntegralByTask(usertask) > 0) {
-			if (editTaskState(usertask.getTask_id(), 3).equals("OK")) {
-				return "OK";
+	public String taskSettlement(String taskJson) {
+		List<User_task> tt = JSONObject.parseArray(taskJson, User_task.class);
+		for (User_task usertask : tt) {
+			if (userTaskService.editUserIntegralByTask(usertask) > 0) {
+				if (editTaskState(usertask.getTask_id(), 3).equals("ON")) {
+					return "NO";
+				}
 			}
 		}
-		return "NO";
+		return "OK";
 	}
 
 	/**
@@ -102,19 +104,23 @@ public class TaskController {
 	 */
 	@RequestMapping("/taskComplete")
 	@ResponseBody
-	public String taskComplete(User_task usertask) {
+	public String taskComplete(String taskJson) {
+		List<User_task> tt = JSONObject.parseArray(taskJson, User_task.class);
 		int a = 0;
 		User user = new User();
-		a = userTaskService.findUserIntegralByTask(usertask);
-		user.setUser_id(usertask.getUser_id());
-		user.setUser_integral(userService.findUserIntegral(usertask.getUser_id()) + a);
-		if (userService.editUserIntegral(user) > 0) {
-			editTaskState(usertask.getTask_id(), 4);
-			usertask.setUserIntegral(0);
-			userTaskService.editUserIntegralByTask(usertask);
-			return "OK";
+		for (User_task usertask : tt) {
+			a = userTaskService.findUserIntegralByTask(usertask);
+			user.setUser_id(usertask.getUser_id());
+			user.setUser_integral(userService.findUserIntegral(usertask.getUser_id()) + a);
+			if (userService.editUserIntegral(user) > 0) {
+				editTaskState(usertask.getTask_id(), 4);
+				usertask.setUserIntegral(0);
+				if (userTaskService.editUserIntegralByTask(usertask) <= 0) {
+					return "NO";
+				}
+			}
 		}
-		return "NO";
+		return "OK";
 	}
 
 }

@@ -138,9 +138,9 @@ public class MingDaoController {
 	 * @param access_token
 	 * @return
 	 */
-	@RequestMapping("/getTasks")
+	@RequestMapping("/TasksInsert")
 	@ResponseBody
-	public String getTasks(String access_token, String taskfen) throws Exception {
+	public String TasksInsert(String access_token) throws Exception {
 		// 拼接url
 		String urls = "https://api.mingdao.com/v2/task/get_task_list?access_token=" + access_token
 				+ "&project_id=all&page_index=1&page_size=20&filter_type=6&status=0&tag_ids=&without_tag=false&sort=10&is_star=false&time_format=true&format=json&account=true";
@@ -148,41 +148,47 @@ public class MingDaoController {
 		List<Task> tt = JSONObject.parseArray(JsonUtil.getJsonPojo(result), Task.class);
 		Task task = null;
 		User_task usertask = null;
-		List<tasks> listJson = new ArrayList<tasks>();
 		for (Task taskJson : tt) {
 			task = new Task();
 			usertask = new User_task();
 			for (tasks tasks : taskJson.getTasks()) {
 				task.setTask_id(tasks.getTask_id());
-				// 任务详情的JSON
 				String taskInfo = getTaskInfo(access_token, tasks.getTask_id());
 				tasks taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
-				// 创建人的用户id
-				usertask = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User_task.class);
-				taskIn.getCharge_user().getAccount_id();
-				String aid = userMapperService.findUserIdbyAid(usertask.getUser_id());
-				usertask.setUser_id(usertask.getUser_id());
-				usertask.setTask_id(tasks.getTask_id());
-				if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
-					usertask.setTaskrole_id(2);
-					taskIn.setUserState("2");
-				} else {
-					usertask.setTaskrole_id(3);
-					taskIn.setUserState("3");
-				}
-				listJson.add(taskIn);
 				taskService.findTaskInsertTime(task, taskIn.getCreate_time(), taskIn.getUpdate_time(),
 						tasks.getTask_id());
 				userTaskService.findTaskInsertTime(usertask, taskIn.getCreate_time(), taskIn.getUpdate_time(),
 						tasks.getTask_id());
-				// set任务总积分
-				taskIn.setTaskIntgarl(taskService.findTaskIntegral(tasks.getTask_id()));
-				// set任务状态
-				taskIn.setTaskState(taskService.taskStateList(tasks.getTask_id()));
 			}
-			result = JSON.toJSONString(listJson);
 		}
-		String JSONarr = taskService.TaskJson(result, taskfen);
+		return "OK";
+	}
+
+	@RequestMapping("/getTasks")
+	@ResponseBody
+	public String getTask(String access_token, String taskfen) throws Exception {
+		TasksInsert(access_token);
+		List<tasks> listJson = new ArrayList<tasks>();
+		User_task usertask = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User_task.class);
+		List<User_task> taskList = userTaskService.findTaskIdByUserId(usertask.getUser_id());
+		for (User_task user_task : taskList) {
+			String taskInfo = getTaskInfo(access_token, user_task.getTask_id());
+			tasks taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
+			String aid = userMapperService.findUserIdbyAid(usertask.getUser_id());
+			usertask.setUser_id(usertask.getUser_id());
+			usertask.setTask_id(user_task.getTask_id());
+			if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
+				usertask.setTaskrole_id(2);
+				taskIn.setUserState("2");
+			} else {
+				usertask.setTaskrole_id(3);
+				taskIn.setUserState("3");
+			}
+			taskIn.setTaskIntgarl(taskService.findTaskIntegral(user_task.getTask_id()));
+			taskIn.setTaskState(taskService.taskStateList(user_task.getTask_id()));
+			listJson.add(taskIn);
+		}
+		String JSONarr = taskService.TaskJson(JSON.toJSONString(listJson), taskfen);
 		return JSONarr;
 	}
 

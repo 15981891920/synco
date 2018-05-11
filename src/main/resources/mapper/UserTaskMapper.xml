@@ -22,7 +22,8 @@
 		task_id = #{task_id}
 	</select>
 
-	<select id="findUserIntegralByTask" resultType="Integer" parameterType="User_task">
+	<select id="findUserIntegralByTask" resultType="Integer"
+		parameterType="User_task">
 		select
 		user_integral from user_task where
 		user_id=#{user_id}
@@ -37,4 +38,9 @@
 		where user_id=#{user_id}
 		and task_id=#{task_id}
 	</update>
+
+	<select id="findTaskIdByUserId" resultType="User_task">
+		SELECT task_id FROM
+		user_task where user_id = #{user_id}
+	</select>
 </mapper>

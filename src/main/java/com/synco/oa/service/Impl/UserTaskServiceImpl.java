@@ -3,6 +3,7 @@ package com.synco.oa.service.Impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -77,6 +78,11 @@ public class UserTaskServiceImpl implements UserTaskService {
 			s = "C";
 		}
 		return s;
+	}
+
+	@Override
+	public List<User_task> findTaskIdByUserId(String user_id) {
+		return userTaskMapper.findTaskIdByUserId(user_id);
 	}
 
 }

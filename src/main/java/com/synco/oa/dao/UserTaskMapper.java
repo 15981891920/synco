@@ -1,6 +1,7 @@
 package com.synco.oa.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,6 +32,14 @@ public interface UserTaskMapper {
 	 * @return
 	 */
 	String findTaskId(@Param("task_id") String task_id);
+
+	/**
+	 * 根据userid查询taskid
+	 * 
+	 * @param task_id
+	 * @return
+	 */
+	List<User_task> findTaskIdByUserId(@Param("user_id") String user_id);
 
 	/**
 	 * 查询个人所得分

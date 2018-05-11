@@ -1,5 +1,7 @@
 package com.synco.oa.service;
 
+import java.util.List;
+
 import com.synco.oa.pojo.User_task;
 
 public interface UserTaskService {
@@ -29,6 +31,14 @@ public interface UserTaskService {
 	 * @return
 	 */
 	String findTaskId(String task_id);
+
+	/**
+	 * 根据userid查询taskid
+	 * 
+	 * @param task_id
+	 * @return
+	 */
+	List<User_task> findTaskIdByUserId(String user_id);
 
 	/**
 	 * 查询个人所得分
