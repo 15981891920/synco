@@ -30,7 +30,7 @@ public interface UserTaskService {
 	 * @param task_id
 	 * @return
 	 */
-	String findTaskId(String task_id);
+	String findTaskId(User_task usertask);
 
 	/**
 	 * 根据userid查询taskid

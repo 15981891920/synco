@@ -31,7 +31,7 @@ public interface UserTaskMapper {
 	 * @param task_id
 	 * @return
 	 */
-	String findTaskId(@Param("task_id") String task_id);
+	String findTaskId(User_task usertask);
 
 	/**
 	 * 根据userid查询taskid

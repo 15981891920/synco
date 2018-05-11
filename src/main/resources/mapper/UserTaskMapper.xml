@@ -19,7 +19,7 @@
 		select task_id
 		from user_task
 		where
-		task_id = #{task_id}
+		task_id = #{task_id} and user_id = #{user_id}
 	</select>
 
 	<select id="findUserIntegralByTask" resultType="Integer"

@@ -33,12 +33,12 @@ public class UserTaskServiceImpl implements UserTaskService {
 			if (simdf.parse(simdf.format(maxTime)).getTime() < simdf.parse(createdTime).getTime()) {
 				a = InsertUserTask(userTask);
 			} else if (simdf.parse(updateTime).getTime() > simdf.parse(simdf.format(maxTime)).getTime()) {
-				String taskId = findTaskId(task_id);
+				String taskId = findTaskId(userTask);
 				if (!taskId.equals(task_id)) {
 					a = InsertUserTask(userTask);
 				}
 			} else {
-				if (findTaskId(task_id) == "C") {
+				if (findTaskId(userTask) == "C") {
 					a = InsertUserTask(userTask);
 				}
 			}
@@ -72,8 +72,8 @@ public class UserTaskServiceImpl implements UserTaskService {
 	}
 
 	@Override
-	public String findTaskId(String task_id) {
-		String s = userTaskMapper.findTaskId(task_id);
+	public String findTaskId(User_task usertask) {
+		String s = userTaskMapper.findTaskId(usertask);
 		if (s == null) {
 			s = "C";
 		}

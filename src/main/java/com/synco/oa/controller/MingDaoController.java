@@ -153,8 +153,19 @@ public class MingDaoController {
 			usertask = new User_task();
 			for (tasks tasks : taskJson.getTasks()) {
 				task.setTask_id(tasks.getTask_id());
+				usertask = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User_task.class);
 				String taskInfo = getTaskInfo(access_token, tasks.getTask_id());
 				tasks taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
+				String aid = userMapperService.findUserIdbyAid(usertask.getUser_id());
+				usertask.setUser_id(usertask.getUser_id());
+				usertask.setTask_id(tasks.getTask_id());
+				if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
+					usertask.setTaskrole_id(2);
+					// taskIn.setUserState("2");
+				} else {
+					usertask.setTaskrole_id(3);
+					// taskIn.setUserState("3");
+				}
 				taskService.findTaskInsertTime(task, taskIn.getCreate_time(), taskIn.getUpdate_time(),
 						tasks.getTask_id());
 				userTaskService.findTaskInsertTime(usertask, taskIn.getCreate_time(), taskIn.getUpdate_time(),
@@ -175,13 +186,11 @@ public class MingDaoController {
 			String taskInfo = getTaskInfo(access_token, user_task.getTask_id());
 			tasks taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
 			String aid = userMapperService.findUserIdbyAid(usertask.getUser_id());
-			usertask.setUser_id(usertask.getUser_id());
-			usertask.setTask_id(user_task.getTask_id());
 			if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
-				usertask.setTaskrole_id(2);
+				// usertask.setTaskrole_id(2);
 				taskIn.setUserState("2");
 			} else {
-				usertask.setTaskrole_id(3);
+				// usertask.setTaskrole_id(3);
 				taskIn.setUserState("3");
 			}
 			taskIn.setTaskIntgarl(taskService.findTaskIntegral(user_task.getTask_id()));
