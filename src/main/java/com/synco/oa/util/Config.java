@@ -10,7 +10,6 @@ public class Config {
 	public static final  String RESPONSE_TYPE="token";//token或者code
 
 	public static final  String REDIRECT_URI="http://127.0.0.1:8080/lg/getAccessTokenUrl";//需要换成您的应用设置的回调地址
-	public static String loginfalseurl="redirect:/Test/getAccessToken";//登录失败跳转
 	public static String loginOkurl="redirect:/Test/getTasks";//登陆成功跳转
 	public static String getAuthorizeUrl(){
 		String url=AUTHURL

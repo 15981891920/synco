@@ -16,7 +16,7 @@
 		WHERE user_id=#{user_id}
 	</select>
 
-	<select id="findUserIntegral" parameterType="String" resultType="Integer">
+	<select id="findUserIntegral" resultType="Integer">
 		select user_integral from user
 		where user_id = #{userid}
 	</select>

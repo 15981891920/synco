@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -21,11 +19,9 @@ import com.synco.oa.pojo.tasks;
 import com.synco.oa.service.TaskService;
 import com.synco.oa.service.UserMapperService;
 import com.synco.oa.service.UserTaskService;
-import com.synco.oa.util.Config;
 import com.synco.oa.util.HttpClientUtils;
 import com.synco.oa.util.JsonUtil;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * @author LiQian
@@ -37,37 +33,13 @@ import io.swagger.annotations.ApiOperation;
 public class MingDaoController {
 
 	@Resource
-	private UserMapperService userMapperService;
+	private UserMapperService userService;
 
 	@Resource
 	private TaskService taskService;
 
 	@Resource
 	private UserTaskService userTaskService;
-
-	/**
-	 * 获取URL(登陆授权)
-	 * 
-	 */
-	@ApiOperation(value = "获取URL", notes = "获取URL,调用明道登陆接口")
-	@RequestMapping(value = "/getAccessToken", method = RequestMethod.GET)
-	public void getAccessTokens(HttpServletResponse response) throws Exception {
-		String url = Config.getAuthorizeUrl();
-		response.sendRedirect(url);
-	}
-
-	/**
-	 * 获取令牌access_token
-	 * 
-	 * @param code
-	 *            回掉地址返回的code,用来获取access_token
-	 */
-	@RequestMapping(value = "/getAccessTokenUrl", method = RequestMethod.GET)
-	@ResponseBody
-	public String getAccessTokenUrl(String code) {
-		String TokenUrl = Config.getAccessTokenByCode(code);
-		return TokenUrl;
-	}
 
 	/**
 	 * 获取当前登录用户的基本信息
@@ -82,12 +54,12 @@ public class MingDaoController {
 		String result = HttpClientUtils.get(url.toString(), "UTF-8");
 		// 转化实体类
 		User pojo = JSONObject.parseObject(JsonUtil.getJsonPojo(result), User.class);
-		int nums = userMapperService.selectUser(pojo);
+		int nums = userService.selectUser(pojo);
 		if (nums > 0) {
 			return result;
 		} else {
 			pojo.setUser_integral(0);
-			nums = userMapperService.inserUserInfoId(pojo);
+			nums = userService.inserUserInfoId(pojo);
 			if (nums >= 1) {
 				return result;
 			}
@@ -107,7 +79,7 @@ public class MingDaoController {
 	public Map<String, Object> getUserIntegral(String access_token) throws Exception {
 		User userinfo = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User.class);
 		String userid = userinfo.getUser_id();
-		int userIn = userMapperService.findUserIntegral(userid);
+		int userIn = userService.findUserIntegral(userid);
 		Map<String, Object> userMap = new HashMap<>();
 		userMap.put("user_id", userid);
 		userMap.put("userIntegral", userIn);
@@ -156,7 +128,7 @@ public class MingDaoController {
 				usertask = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User_task.class);
 				String taskInfo = getTaskInfo(access_token, tasks.getTask_id());
 				tasks taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
-				String aid = userMapperService.findUserIdbyAid(usertask.getUser_id());
+				String aid = userService.findUserIdbyAid(usertask.getUser_id());
 				usertask.setUser_id(usertask.getUser_id());
 				usertask.setTask_id(tasks.getTask_id());
 				if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
@@ -185,7 +157,7 @@ public class MingDaoController {
 		for (User_task user_task : taskList) {
 			String taskInfo = getTaskInfo(access_token, user_task.getTask_id());
 			tasks taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
-			String aid = userMapperService.findUserIdbyAid(usertask.getUser_id());
+			String aid = userService.findUserIdbyAid(usertask.getUser_id());
 			if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
 				// usertask.setTaskrole_id(2);
 				taskIn.setUserState("2");
