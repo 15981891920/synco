@@ -3,6 +3,8 @@
  */
 package com.synco.oa.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -46,5 +48,19 @@ public interface UserMapper {
 	 * @return
 	 */
 	int editUserIntegral(User user);
+	/**
+	 * 查用户返回实体
+	 * @param user
+	 * @return
+	 */
+	
+	List<User> selectUser2(User user);
+
+	/**
+	 * 更新令牌
+	 * @param user
+	 * @return
+	 */
+	int updateUser(User user);
 
 }

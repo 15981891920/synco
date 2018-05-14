@@ -35,6 +35,7 @@ public class TaskServiceImpl implements TaskService {
 
 	/**
 	 * 判断时间是否新增任务
+	 * 经过不断修改，改成了一个比较傻B的逻辑判断，最后就这样吧，不想改了
 	 * 
 	 * @author 10049
 	 */

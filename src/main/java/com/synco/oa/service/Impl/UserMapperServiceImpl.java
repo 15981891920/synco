@@ -3,6 +3,8 @@
  */
 package com.synco.oa.service.Impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -44,6 +46,18 @@ public class UserMapperServiceImpl implements UserMapperService {
 	@Override
 	public int editUserIntegral(User user) {
 		return userMapper.editUserIntegral(user);
+	}
+
+	@Override
+	public List<User> selectUser2(User user) {
+		// TODO Auto-generated method stub
+		return userMapper.selectUser2(user);
+	}
+
+	@Override
+	public int modifyUser(User u) {
+		// TODO Auto-generated method stub
+		return userMapper.updateUser(u);
 	}
 
 }

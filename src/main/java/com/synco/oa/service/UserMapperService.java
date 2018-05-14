@@ -1,5 +1,7 @@
 package com.synco.oa.service;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,5 +52,18 @@ public interface UserMapperService {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	int editUserIntegral(User user);
-
+	/**
+	 * 查用户返回实体
+	 * @param user
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	 List<User> selectUser2(User user);
+	 /**
+	  * 修改令牌
+	  * @param u
+	  * @return
+	  */
+	@Transactional(propagation = Propagation.REQUIRED)
+	 int modifyUser(User u);
 }

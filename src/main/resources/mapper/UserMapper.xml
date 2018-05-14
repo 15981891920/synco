@@ -6,8 +6,8 @@
 	<!-- 第一次登陆新增用户id,账户id,积分为0 -->
 	<insert id="inserUserInfoId" parameterType="User">
 		INSERT INTO
-		`user`(user_id,account_id,user_integral)
-		VALUES(#{user_id},#{account_id},#{user_integral})
+		`user`(user_id,account_id,user_integral,user_token,user_flush_token)
+		VALUES(#{user_id},#{account_id},#{user_integral},#{user_token},#{user_flush_token})
 	</insert>
 	<!-- 查询用户 -->
 	<select id="selectUser" resultType="int" parameterType="User">
@@ -31,5 +31,15 @@
 		update user set
 		user_integral = #{user_integral}
 		where user_id = #{user_id}
+	</update>
+	<select id="selectUser2" resultType="User" parameterType="User">
+		SELECT
+		* FROM `user`
+		WHERE user_token=#{user_token}
+	</select>
+	<!-- 更新令牌 -->
+	<update id="updateUser" parameterType="User">
+	update `user` set user_token=#{user_token},user_flush_token=#{user_flush_token}
+	where user_id=#{user_id}
 	</update>
 </mapper>

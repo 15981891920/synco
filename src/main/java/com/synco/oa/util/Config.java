@@ -8,8 +8,10 @@ public class Config {
 	public static final  String APPKEY="0FE52514F596";//需要换成您的应用的appkey
 	public static final  String APPSECRET="731869AC43DF57DD50C48C2A676848F";//需要换成您的应用的appSecret
 	public static final  String RESPONSE_TYPE="token";//token或者code
-	public static final  String REDIRECT_URI="http://127.0.0.1:8080/Test/getAccessTokenUrl";//需要换成您的应用设置的回调地址
-	
+
+	public static final  String REDIRECT_URI="http://127.0.0.1:8080/lg/getAccessTokenUrl";//需要换成您的应用设置的回调地址
+	public static String loginfalseurl="redirect:/Test/getAccessToken";//登录失败跳转
+	public static String loginOkurl="redirect:/Test/getTasks";//登陆成功跳转
 	public static String getAuthorizeUrl(){
 		String url=AUTHURL
 			+"app_key="+APPKEY
@@ -32,6 +34,15 @@ public class Config {
 		String url =getAccessTokenUrl(code);
 		String result=HttpUtil.httpByGet2StringSSL(url, null, null);
 		return result;
+	}
+	public static String flushToken(String rtoken) {
+		String url=ACCEURL
+				+"app_key="+APPKEY
+				+"&app_secret="+APPSECRET
+				+"&grant_type=refresh_token"
+				+"&format=json"
+				+"&refresh_token="+rtoken;
+		return HttpUtil.httpByGet2StringSSL(url, null, null);
 	}
 }
 

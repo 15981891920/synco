@@ -83,13 +83,13 @@ public class MingDaoController {
 		// 转化实体类
 		User pojo = JSONObject.parseObject(JsonUtil.getJsonPojo(result), User.class);
 		int nums = userMapperService.selectUser(pojo);
-		if (nums == 1) {
+		if (nums > 0) {
 			return result;
 		} else {
 			pojo.setUser_integral(0);
 			nums = userMapperService.inserUserInfoId(pojo);
 			if (nums >= 1) {
-				result = "OK数据新增成功";
+				return result;
 			}
 		}
 		return result;

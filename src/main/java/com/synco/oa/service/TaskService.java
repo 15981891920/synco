@@ -20,6 +20,12 @@ public interface TaskService {
 
 	/**
 	 * 查询最后一次插入时间
+	 * 
+	 * @param task
+	 * @param createdTime
+	 * @param updateTime
+	 * @param task_id
+	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	Integer findTaskInsertTime(Task task, String createdTime, String updateTime, String task_id);
