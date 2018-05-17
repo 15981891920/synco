@@ -189,4 +189,4 @@ public class MingDaoController {
 		String result = HttpClientUtils.get(url.toString(), "UTF-8");
 		return result;
 	}
-}
+}		

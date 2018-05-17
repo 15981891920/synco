@@ -28,7 +28,7 @@ public class LoginController {
 	@Resource
 	private UserMapperService userMapperService;
 
-	/**
+	/** 
 	 * 登录
 	 * 
 	 * @param session
@@ -116,8 +116,8 @@ public class LoginController {
 		User pojo = JSONObject.parseObject(JsonUtil.getJsonPojo(result), User.class);
 		pojo.setUser_token(actoken);
 		pojo.setUser_flush_token(rtoken);
-		List<User> l = userMapperService.selectUser2(pojo);
-		if (l.size() > 0) {
+		int num = userMapperService.selectUser(pojo);
+		if (num > 0) {
 			userMapperService.modifyUser(pojo);
 		} else {
 			pojo.setUser_integral(0);
