@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.synco.oa.service.Impl;
 
 import java.util.List;
@@ -58,6 +55,11 @@ public class UserMapperServiceImpl implements UserMapperService {
 	public int modifyUser(User u) {
 		// TODO Auto-generated method stub
 		return userMapper.updateUser(u);
+	}
+
+	@Override
+	public String findUserIdbyAidU(String aid) {
+		return userMapper.findUserIdbyAidU(aid);
 	}
 
 }

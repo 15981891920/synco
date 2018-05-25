@@ -42,6 +42,14 @@ public interface UserTaskMapper {
 	List<User_task> findTaskIdByUserId(@Param("user_id") String user_id);
 
 	/**
+	 * 查询是否有这条中间表信息
+	 * 
+	 * @param usertask
+	 * @return
+	 */
+	Integer countTaskUser(User_task usertask);
+
+	/**
 	 * 查询个人所得分
 	 * 
 	 * @param user_id

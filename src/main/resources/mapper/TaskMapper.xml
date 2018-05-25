@@ -36,10 +36,11 @@
 	</select>
 
 	<select id="taskStateListAll" resultType="Taskstate">
-		select id,taskstate_name
+		select
+		id,taskstate_name
 		from taskstate
 	</select>
-	
+
 	<update id="editTaskState" parameterType="Task">
 		update task set
 		task_taskstate_id = #{taskState}

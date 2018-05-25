@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synco.oa.pojo.User_task;
+import com.synco.oa.pojo.tasks;
 
 public interface UserTaskService {
 
@@ -27,7 +28,7 @@ public interface UserTaskService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	Integer findTaskInsertTime(User_task userTask, String createdTime, String updateTime, String task_id);
+	Integer findTaskInsertTime(User_task userTask, tasks taskIn);
 
 	/**
 	 * 查询任务id

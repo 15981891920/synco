@@ -36,6 +36,14 @@ public interface UserMapper {
 	String findUserIdbyAid(@Param("uid") String uid);
 
 	/**
+	 * 根据负责人账户id查询用户id>真
+	 * 
+	 * @param Aid
+	 * @return
+	 */
+	String findUserIdbyAidU(@Param("aid") String aid);
+
+	/**
 	 * 查询个人总积分
 	 * 
 	 * @return
@@ -48,16 +56,19 @@ public interface UserMapper {
 	 * @return
 	 */
 	int editUserIntegral(User user);
+
 	/**
 	 * 查用户返回实体
+	 * 
 	 * @param user
 	 * @return
 	 */
-	
+
 	List<User> selectUser2(User user);
 
 	/**
 	 * 更新令牌
+	 * 
 	 * @param user
 	 * @return
 	 */

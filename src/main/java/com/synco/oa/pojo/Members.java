@@ -8,7 +8,7 @@ public class Members {
 	private String full_name;
 	private String avatar;
 	private String account_id;
-
+	
 	public String getFull_name() {
 		return full_name;
 	}

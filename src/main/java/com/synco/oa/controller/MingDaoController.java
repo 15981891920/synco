@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.synco.oa.pojo.Members;
 import com.synco.oa.pojo.Task;
 import com.synco.oa.pojo.User;
 import com.synco.oa.pojo.User_task;
@@ -27,7 +28,6 @@ import io.swagger.annotations.Api;
  * @author LiQian
  *
  */
-@Api("测试明道API")
 @Controller
 @RequestMapping("/Test")
 public class MingDaoController {
@@ -54,6 +54,9 @@ public class MingDaoController {
 		String result = HttpClientUtils.get(url.toString(), "UTF-8");
 		// 转化实体类
 		User pojo = JSONObject.parseObject(JsonUtil.getJsonPojo(result), User.class);
+		if (pojo == null) {
+			return "{\"task_id\":\"233\"}";
+		}
 		int nums = userService.selectUser(pojo);
 		if (nums > 0) {
 			return result;
@@ -86,13 +89,6 @@ public class MingDaoController {
 		return userMap;
 	}
 
-	/**
-	 * 获取项目下成员任务甘特图用列表（全部任务）
-	 * 
-	 * @param access_token
-	 * @param folder_id
-	 * @return
-	 */
 	/*
 	 * @RequestMapping("/getFoldersGantt")
 	 * 
@@ -103,7 +99,6 @@ public class MingDaoController {
 	 * HttpClientUtils.get(url.toString(), "UTF-8");
 	 * System.out.println(url.toString()); return result; }
 	 */
-
 	/**
 	 * 获取当前登录账户的任务列表
 	 * 
@@ -112,61 +107,82 @@ public class MingDaoController {
 	 */
 	@RequestMapping("/TasksInsert")
 	@ResponseBody
-	public String TasksInsert(String access_token) throws Exception {
+	public List<tasks> TasksInsert(String access_token) throws Exception {
 		// 拼接url
 		String urls = "https://api.mingdao.com/v2/task/get_task_list?access_token=" + access_token
 				+ "&project_id=all&page_index=1&page_size=20&filter_type=6&status=0&tag_ids=&without_tag=false&sort=10&is_star=false&time_format=true&format=json&account=true";
 		String result = HttpClientUtils.get(urls.toString(), "UTF-8");
 		List<Task> tt = JSONObject.parseArray(JsonUtil.getJsonPojo(result), Task.class);
+		User_task usertask = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User_task.class);
+		if (usertask == null) {
+			return null;
+		}
 		Task task = null;
-		User_task usertask = null;
-		for (Task taskJson : tt) {
-			task = new Task();
-			usertask = new User_task();
-			for (tasks tasks : taskJson.getTasks()) {
-				task.setTask_id(tasks.getTask_id());
-				usertask = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User_task.class);
-				String taskInfo = getTaskInfo(access_token, tasks.getTask_id());
-				tasks taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
-				String aid = userService.findUserIdbyAid(usertask.getUser_id());
-				usertask.setUser_id(usertask.getUser_id());
-				usertask.setTask_id(tasks.getTask_id());
-				if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
-					usertask.setTaskrole_id(2);
-					// taskIn.setUserState("2");
-				} else {
-					usertask.setTaskrole_id(3);
-					// taskIn.setUserState("3");
+		String taskInfo = null;
+		tasks taskIn = null;
+		List<tasks> taskslist = new ArrayList<tasks>();
+		if (tt != null) {
+			for (Task taskJson : tt) {
+				task = new Task();
+				for (tasks tasks : taskJson.getTasks()) {
+					task.setTask_id(tasks.getTask_id());
+					taskInfo = getTaskInfo(access_token, tasks.getTask_id());
+					taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
+					if (taskIn == null) {
+						continue;
+					}
+					taskslist.add(taskIn);
+					String aid = userService.findUserIdbyAid(usertask.getUser_id());
+					usertask.setUser_id(usertask.getUser_id());
+					usertask.setTask_id(tasks.getTask_id());
+					if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
+						usertask.setTaskrole_id(2);
+					} else {
+						usertask.setTaskrole_id(3);
+					}
+					taskService.findTaskInsertTime(task, taskIn.getCreate_time(), taskIn.getUpdate_time());
+					Integer efa = userTaskService.findTaskInsertTime(usertask, taskIn);
+					if(efa == 0) {
+						List<tasks> cc = new ArrayList<>();
+						cc.add(null);
+						cc.add(null);
+						cc.add(null);
+						return cc;
+					}
 				}
-				taskService.findTaskInsertTime(task, taskIn.getCreate_time(), taskIn.getUpdate_time(),
-						tasks.getTask_id());
-				userTaskService.findTaskInsertTime(usertask, taskIn.getCreate_time(), taskIn.getUpdate_time(),
-						tasks.getTask_id());
 			}
 		}
-		return "OK";
+
+		return taskslist;
 	}
 
+	/**
+	 * 获取项目下成员全部任务信息
+	 * 
+	 * @param access_token
+	 * @param folder_id
+	 * @return
+	 */
 	@RequestMapping("/getTasks")
 	@ResponseBody
 	public String getTask(String access_token, String taskfen) throws Exception {
-		TasksInsert(access_token);
+		List<tasks> taskslist = TasksInsert(access_token);
+		if (taskslist == null) {
+			return "{\"error\":\"用户访问令牌失效，请重新登陆\"}";
+		}else if(taskslist.size() == 3) {
+			return "{\"error\":\"请确保所有参与人都登陆过摩客积分\"}";
+		}
 		List<tasks> listJson = new ArrayList<tasks>();
 		User_task usertask = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User_task.class);
-		List<User_task> taskList = userTaskService.findTaskIdByUserId(usertask.getUser_id());
-		for (User_task user_task : taskList) {
-			String taskInfo = getTaskInfo(access_token, user_task.getTask_id());
-			tasks taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
+		for (tasks taskIn : taskslist) {
 			String aid = userService.findUserIdbyAid(usertask.getUser_id());
 			if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
-				// usertask.setTaskrole_id(2);
 				taskIn.setUserState("2");
 			} else {
-				// usertask.setTaskrole_id(3);
 				taskIn.setUserState("3");
 			}
-			taskIn.setTaskIntgarl(taskService.findTaskIntegral(user_task.getTask_id()));
-			taskIn.setTaskState(taskService.taskStateList(user_task.getTask_id()));
+			taskIn.setTaskIntgarl(taskService.findTaskIntegral(taskIn.getTask_id()));
+			taskIn.setTaskState(taskService.taskStateList(taskIn.getTask_id()));
 			listJson.add(taskIn);
 		}
 		String JSONarr = taskService.TaskJson(JSON.toJSONString(listJson), taskfen);
@@ -189,4 +205,4 @@ public class MingDaoController {
 		String result = HttpClientUtils.get(url.toString(), "UTF-8");
 		return result;
 	}
-}		
+}

@@ -28,14 +28,13 @@ public class LoginController {
 	@Resource
 	private UserMapperService userMapperService;
 
-	/** 
-	 * 登录
+	/**
 	 * 
 	 * @param session
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login")
 	public String login(HttpSession session, HttpServletResponse response, HttpServletRequest request)
 			throws Exception {
 
@@ -90,9 +89,10 @@ public class LoginController {
 	 * 
 	 */
 	@ApiOperation(value = "获取URL", notes = "获取URL,调用明道登陆接口")
-	@RequestMapping(value = "/getAccessToken", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAccessToken")
 	public void getAccessTokens(HttpServletResponse response) throws Exception {
 		String url = Config.getAuthorizeUrl();
+		System.out.println(url);
 		response.sendRedirect(url);
 	}
 
@@ -103,7 +103,7 @@ public class LoginController {
 	 *            回掉地址返回的code,用来获取access_token
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/getAccessTokenUrl", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAccessTokenUrl")
 	public String getAccessTokenUrl(String code, HttpSession session, HttpServletResponse response) throws Exception {
 		String re = Config.getAccessTokenByCode(code);
 		System.out.println(re);

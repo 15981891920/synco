@@ -26,6 +26,12 @@
 		from user
 		where user_id = #{uid}
 	</select>
+	
+	<select id="findUserIdbyAidU" parameterType="String" resultType="String">
+		select user_id
+		from user
+		where account_id = #{aid}
+	</select>
 
 	<update id="editUserIntegral" parameterType="User">
 		update user set

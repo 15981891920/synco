@@ -14,19 +14,14 @@ public class tasks {
 	private List<Members> members;
 	// 获取负责人的名字以及账户ID
 	private User charge_user;
-
 	// 获取项目创建时间
 	private String create_time;
-
 	// 最后一次修改时间
 	private String update_time;
-
 	// 项目总积分
 	private Integer TaskIntgarl;
-
 	// 项目状态
 	private String TaskState;
-
 	// 你在任务中的权限
 	private String userState;
 

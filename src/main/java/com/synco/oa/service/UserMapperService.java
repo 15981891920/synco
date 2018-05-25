@@ -38,6 +38,15 @@ public interface UserMapperService {
 	String findUserIdbyAid(String uid);
 
 	/**
+	 * 根据负责人账户id查询用户id>真
+	 * 
+	 * @param Aid
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	String findUserIdbyAidU(String aid);
+
+	/**
 	 * 查询个人总积分
 	 * 
 	 * @return
@@ -52,18 +61,22 @@ public interface UserMapperService {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	int editUserIntegral(User user);
+
 	/**
 	 * 查用户返回实体
+	 * 
 	 * @param user
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	 List<User> selectUser2(User user);
-	 /**
-	  * 修改令牌
-	  * @param u
-	  * @return
-	  */
+	List<User> selectUser2(User user);
+
+	/**
+	 * 修改令牌
+	 * 
+	 * @param u
+	 * @return
+	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	 int modifyUser(User u);
+	int modifyUser(User u);
 }

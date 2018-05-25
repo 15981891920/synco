@@ -34,33 +34,35 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	/**
-	 * 判断时间是否新增任务
-	 * 经过不断修改，改成了一个比较傻B的逻辑判断，最后就这样吧，不想改了
+	 * 判断时间是否新增任务 经过不断修改，改成了一个比较傻B的逻辑判断，最后就这样吧，不想改了
 	 * 
 	 * @author 10049
 	 */
 	@Override
-	public Integer findTaskInsertTime(Task task, String createdTime, String updateTime, String task_id) {
+	public Integer findTaskInsertTime(Task task, String createdTime, String updateTime) {
 		SimpleDateFormat simdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date maxTime = taskMapper.findTaskInsertTime();
-		Integer a = null;
+		Integer a = 100;
+		if (maxTime == null) {
+			a = inserTaskInfoId(task);
+			return a;
+		}
 		try {
 			if (simdf.parse(simdf.format(maxTime)).getTime() < simdf.parse(createdTime).getTime()) {
 				a = inserTaskInfoId(task);
 			} else if (simdf.parse(updateTime).getTime() > simdf.parse(simdf.format(maxTime)).getTime()) {
-				String taskId = findTaskId(task_id);
-				if (!taskId.equals(task_id)) {
+				String taskId = findTaskId(task.getTask_id());
+				if (!taskId.equals(task.getTask_id())) {
 					a = inserTaskInfoId(task);
 				}
 			} else {
-				if (findTaskId(task_id) == "C") {
+				if (findTaskId(task.getTask_id()) == "C") {
 					a = inserTaskInfoId(task);
 				}
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		System.out.println("-------------" + a);
 		return a;
 	}
 
