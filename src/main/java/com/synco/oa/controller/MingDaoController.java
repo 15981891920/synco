@@ -118,7 +118,6 @@ public class MingDaoController {
 			return null;
 		}
 		Task task = null;
-		String taskInfo = null;
 		tasks taskIn = null;
 		List<tasks> taskslist = new ArrayList<tasks>();
 		if (tt != null) {
@@ -126,29 +125,21 @@ public class MingDaoController {
 				task = new Task();
 				for (tasks tasks : taskJson.getTasks()) {
 					task.setTask_id(tasks.getTask_id());
-					taskInfo = getTaskInfo(access_token, tasks.getTask_id());
-					taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(taskInfo), tasks.class);
+					taskIn = JSONObject.parseObject(JsonUtil.getJsonPojo(getTaskInfo(access_token, tasks.getTask_id())),
+							tasks.class);
 					if (taskIn == null) {
 						continue;
 					}
 					taskslist.add(taskIn);
 					String aid = userService.findUserIdbyAid(usertask.getUser_id());
-					usertask.setUser_id(usertask.getUser_id());
 					usertask.setTask_id(tasks.getTask_id());
 					if (taskIn.getCharge_user().getAccount_id().equals(aid)) {
 						usertask.setTaskrole_id(2);
 					} else {
 						usertask.setTaskrole_id(3);
 					}
-					taskService.findTaskInsertTime(task, taskIn.getCreate_time(), taskIn.getUpdate_time());
-					Integer efa = userTaskService.findTaskInsertTime(usertask, taskIn);
-					if(efa == 0) {
-						List<tasks> cc = new ArrayList<>();
-						cc.add(null);
-						cc.add(null);
-						cc.add(null);
-						return cc;
-					}
+					taskService.findTaskInsertTime(task);
+					userTaskService.findTaskInsertTime(usertask, taskIn);
 				}
 			}
 		}
@@ -169,8 +160,6 @@ public class MingDaoController {
 		List<tasks> taskslist = TasksInsert(access_token);
 		if (taskslist == null) {
 			return "{\"error\":\"用户访问令牌失效，请重新登陆\"}";
-		}else if(taskslist.size() == 3) {
-			return "{\"error\":\"请确保所有参与人都登陆过摩客积分\"}";
 		}
 		List<tasks> listJson = new ArrayList<tasks>();
 		User_task usertask = JSONObject.parseObject(JsonUtil.getJsonPojo(getUserInfo(access_token)), User_task.class);
@@ -183,6 +172,8 @@ public class MingDaoController {
 			}
 			taskIn.setTaskIntgarl(taskService.findTaskIntegral(taskIn.getTask_id()));
 			taskIn.setTaskState(taskService.taskStateList(taskIn.getTask_id()));
+			usertask.setTask_id(taskIn.getTask_id());
+			taskIn.setUserIntgarl(userTaskService.findUserIntegralByTask(usertask));
 			listJson.add(taskIn);
 		}
 		String JSONarr = taskService.TaskJson(JSON.toJSONString(listJson), taskfen);

@@ -74,6 +74,8 @@ public class TaskController {
 		if (taskJson == null) {
 			return "{\"ifSuccess\":\"null\"}";
 		}
+		int countin = 0;
+		Task task = new Task();
 		String jb = JSON.toJSONString(taskJson);
 		JSONArray jb1 = JSONObject.parseArray(jb);
 		User_task user_task = null;
@@ -82,9 +84,13 @@ public class TaskController {
 			user_task = new User_task();
 			user_task.setTask_id(a.get("task_id").toString());
 			String uid = userService.findUserIdbyAidU(a.get("user_id").toString());
+			if (uid == null) {
+				return "{\"error\":\"125\",\"Reason\":\"请确保每个参与人员都登陆过摩客积分\"}";
+			}
 			user_task.setUser_id(uid);
 			user_task.setUserIntegral(Integer.valueOf(a.get("userIntegral").toString()));
 			int c = userTaskService.editUserIntegralByTask(user_task);
+			countin += Integer.valueOf(a.get("userIntegral").toString());
 			System.out.println("--------------------------" + c);
 			if (c == 0) {
 				return "{\"error\":\"105\",\"Reason\":\"个人所得分异常\"}";
@@ -92,6 +98,11 @@ public class TaskController {
 		}
 		if (editTaskState(user_task.getTask_id(), 2).equals("ON")) {
 			return "{\"error\":\"100\",\"Reason\":\"任务状态异常\"}";
+		}
+		task.setTask_id(user_task.getTask_id());
+		task.setTask_integral(countin);
+		if (taskService.editTaskIntegral(task) <= 0) {
+			return "{\"error\":\"105\",\"Reason\":\"个人所得分异常\"}";
 		}
 		return "{\"ifSuccess\":\"success\"}";
 	}
@@ -110,6 +121,8 @@ public class TaskController {
 		if (taskJson == null) {
 			return "{\"ifSuccess\":\"null\"}";
 		}
+		int countin = 0;
+		Task task = new Task();
 		User_task user_task = null;
 		String jb = JSON.toJSONString(taskJson);
 		JSONArray jb1 = JSONObject.parseArray(jb);
@@ -120,13 +133,19 @@ public class TaskController {
 			String uid = userService.findUserIdbyAidU(a.get("user_id").toString());
 			user_task.setUser_id(uid);
 			user_task.setUserIntegral(Integer.valueOf(a.get("userIntegral").toString()));
+			countin += Integer.valueOf(a.get("userIntegral").toString());
 			int c = userTaskService.editUserIntegralByTask(user_task);
 			if (c > 0) {
 				if (editTaskState(user_task.getTask_id(), 3).equals("ON")) {
 					return "{\"error\":\"100\",\"Reason\":\"任务状态修改失败\"}";
 				}
+				task.setTask_id(user_task.getTask_id());
+				task.setTask_integral(countin);
+				if (taskService.editTaskIntegral(task) <= 0) {
+					return "{\"error\":\"105\",\"Reason\":\"个人所得分异常\"}";
+				}
 			} else {
-				return "{\"error\":\"105\",\"Reason\":\"个人所得分异常\"}";
+				return "{\"error\":\"105\",\"Reason\":\"请确保每个参与人员都登陆过摩客积分\"}";
 			}
 		}
 		return "{\"ifSuccess\":\"success\"}";
@@ -156,7 +175,6 @@ public class TaskController {
 			user_task.setTask_id(d.get("task_id").toString());
 			String uid = userService.findUserIdbyAidU(d.get("user_id").toString());
 			user_task.setUser_id(uid);
-			user_task.setUserIntegral(Integer.valueOf(d.get("userIntegral").toString()));
 			a = userTaskService.findUserIntegralByTask(user_task);
 			user.setUser_id(user_task.getUser_id());
 			user.setUser_integral(userService.findUserIntegral(user_task.getUser_id()) + a);

@@ -18,13 +18,12 @@ public class Task implements Serializable {
 	private Integer id;
 	private String task_id;
 	private List<tasks> tasks;// 包含任务ID,和名称
-	private Float task_integral;
+	private Integer task_integral;
 	private Integer task_taskstate_id;
 	private Float task_customer_score;
 	private Float task_admin_score;
 	private Date task_inserttime;
-	
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -49,11 +48,11 @@ public class Task implements Serializable {
 		this.tasks = tasks;
 	}
 
-	public Float getTask_integral() {
+	public Integer getTask_integral() {
 		return task_integral;
 	}
 
-	public void setTask_integral(Float task_integral) {
+	public void setTask_integral(Integer task_integral) {
 		this.task_integral = task_integral;
 	}
 

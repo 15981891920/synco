@@ -48,6 +48,14 @@ public interface TaskMapper {
 	int findTaskIntegral(@Param("task_id") String task_id);
 
 	/**
+	 * 修改任务总积分
+	 * 
+	 * @param task
+	 * @return
+	 */
+	Integer editTaskIntegral(Task task);
+
+	/**
 	 * 查询任务状态
 	 * 
 	 * @param task_id

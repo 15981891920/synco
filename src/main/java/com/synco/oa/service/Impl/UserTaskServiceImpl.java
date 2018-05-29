@@ -1,7 +1,5 @@
 package com.synco.oa.service.Impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -30,21 +28,16 @@ public class UserTaskServiceImpl implements UserTaskService {
 		return userTaskMapper.InsertUserTask(userTask);
 	}
 
-	public Integer insertUsertasks(User_task userTask, tasks taskIn, String task_id) {
-		userTask.setTask_id(task_id);
-		if (taskIn.getMembers().size() > 1) {
+	public Integer insertUsertasks(User_task userTask, tasks taskIn) {
+		userTask.setTask_id(userTask.getTask_id());
+		if (taskIn.getMembers().size() >= 1) {
 			for (Members men : taskIn.getMembers()) {
-				if (men.getAccount_id().equals(taskIn.getCharge_user().getAccount_id())
-						|| men.getAccount_id() == null) {
-					continue;
-				}
 				userTask.setUser_id(userMapper.findUserIdbyAidU(men.getAccount_id()));
-				if (userTask.getUser_id() == null) {
-					return 0;
-				}
-				if (userTaskMapper.countTaskUser(userTask) == 0) {
-					if (InsertUserTask(userTask) > 0) {
-						System.out.println("++++++OK++++++");
+				if(userTask.getUser_id() != null) {
+					if (userTaskMapper.countTaskUser(userTask) == 0) {
+						if (InsertUserTask(userTask) > 0) {
+							System.out.println("++++++OK++++++");
+						}
 					}
 				}
 			}
@@ -54,32 +47,30 @@ public class UserTaskServiceImpl implements UserTaskService {
 
 	@Override
 	public Integer findTaskInsertTime(User_task userTask, tasks taskIn) {
-		SimpleDateFormat simdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		// SimpleDateFormat simdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date maxTime = userTaskMapper.findInsertTime();
-		Integer a = 100;
+		Integer a = null;
 		if (maxTime == null) {
 			a = InsertUserTask(userTask);
+			insertUsertasks(userTask, taskIn);
 			return a;
 		}
-		try {
-			if (simdf.parse(simdf.format(maxTime)).getTime() < simdf.parse(taskIn.getCreate_time()).getTime()) {
-				a = InsertUserTask(userTask);
-				a = insertUsertasks(userTask, taskIn, userTask.getTask_id());
-			} else if (simdf.parse(taskIn.getUpdate_time()).getTime() > simdf.parse(simdf.format(maxTime)).getTime()) {
-				String taskId = findTaskId(userTask);
-				if (!taskId.equals(userTask.getTask_id())) {
-					a = InsertUserTask(userTask);
-					a = insertUsertasks(userTask, taskIn, userTask.getTask_id());
-				}
-			} else {
-				if (findTaskId(userTask) == "C") {
-					a = InsertUserTask(userTask);
-					a = insertUsertasks(userTask, taskIn, userTask.getTask_id());
-				}
-			}
-		} catch (ParseException e) {
-			e.printStackTrace();
+		/*
+		 * try { if (simdf.parse(simdf.format(maxTime)).getTime() <
+		 * simdf.parse(taskIn.getCreate_time()).getTime()) { a =
+		 * InsertUserTask(userTask); a = insertUsertasks(userTask, taskIn); } else if
+		 * (simdf.parse(taskIn.getUpdate_time()).getTime() >
+		 * simdf.parse(simdf.format(maxTime)).getTime()) { String taskId =
+		 * findTaskId(userTask); if (!taskId.equals(userTask.getTask_id())) { a =
+		 * InsertUserTask(userTask); a = insertUsertasks(userTask, taskIn); } } else {
+		 */
+		if (findTaskId(userTask) == "C") {
+			a = InsertUserTask(userTask);
+			a = insertUsertasks(userTask, taskIn);
 		}
+		/*
+		 * } } catch (ParseException e) { e.printStackTrace(); }
+		 */
 		return a;
 	}
 

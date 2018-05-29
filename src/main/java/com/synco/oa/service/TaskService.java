@@ -28,7 +28,7 @@ public interface TaskService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	Integer findTaskInsertTime(Task task, String createdTime, String updateTime);
+	Integer findTaskInsertTime(Task task);
 
 	/**
 	 * 查询任务id
@@ -48,6 +48,15 @@ public interface TaskService {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	Integer findTaskIntegral(String task_id);
+
+	/**
+	 * 修改任务总积分
+	 * 
+	 * @param task
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	Integer editTaskIntegral(Task task);
 
 	/**
 	 * 查询任务状态

@@ -24,6 +24,16 @@ public class tasks {
 	private String TaskState;
 	// 你在任务中的权限
 	private String userState;
+	// 个人所得分
+	private Integer userIntgarl;
+
+	public Integer getUserIntgarl() {
+		return userIntgarl;
+	}
+
+	public void setUserIntgarl(Integer userIntgarl) {
+		this.userIntgarl = userIntgarl;
+	}
 
 	public String getTask_id() {
 		return task_id;

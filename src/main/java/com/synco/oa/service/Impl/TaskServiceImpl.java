@@ -1,7 +1,5 @@
 package com.synco.oa.service.Impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,30 +37,28 @@ public class TaskServiceImpl implements TaskService {
 	 * @author 10049
 	 */
 	@Override
-	public Integer findTaskInsertTime(Task task, String createdTime, String updateTime) {
-		SimpleDateFormat simdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public Integer findTaskInsertTime(Task task) {
+		// SimpleDateFormat simdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date maxTime = taskMapper.findTaskInsertTime();
-		Integer a = 100;
+		Integer a = null;
 		if (maxTime == null) {
 			a = inserTaskInfoId(task);
 			return a;
 		}
-		try {
-			if (simdf.parse(simdf.format(maxTime)).getTime() < simdf.parse(createdTime).getTime()) {
-				a = inserTaskInfoId(task);
-			} else if (simdf.parse(updateTime).getTime() > simdf.parse(simdf.format(maxTime)).getTime()) {
-				String taskId = findTaskId(task.getTask_id());
-				if (!taskId.equals(task.getTask_id())) {
-					a = inserTaskInfoId(task);
-				}
-			} else {
-				if (findTaskId(task.getTask_id()) == "C") {
-					a = inserTaskInfoId(task);
-				}
-			}
-		} catch (ParseException e) {
-			e.printStackTrace();
+		/*
+		 * try { if (simdf.parse(simdf.format(maxTime)).getTime() <
+		 * simdf.parse(taskIn.getCreate_time()).getTime()) { a = inserTaskInfoId(task);
+		 * } else if (simdf.parse(taskIn.getUpdate_time()).getTime() >
+		 * simdf.parse(simdf.format(maxTime)).getTime()) { String taskId =
+		 * findTaskId(task.getTask_id()); if (!taskId.equals(task.getTask_id())) { a =
+		 * inserTaskInfoId(task); } } else {
+		 */
+		if (findTaskId(task.getTask_id()) == "C") {
+			a = inserTaskInfoId(task);
 		}
+		/*
+		 * } } catch (ParseException e) { e.printStackTrace(); }
+		 */
 		return a;
 	}
 
@@ -117,6 +113,11 @@ public class TaskServiceImpl implements TaskService {
 			retuls = JSON.toJSONString(taskList);
 		}
 		return retuls;
+	}
+
+	@Override
+	public Integer editTaskIntegral(Task task) {
+		return taskMapper.editTaskIntegral(task);
 	}
 
 }

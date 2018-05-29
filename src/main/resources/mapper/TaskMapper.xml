@@ -46,4 +46,10 @@
 		task_taskstate_id = #{taskState}
 		where task_id = #{task_id}
 	</update>
+
+	<update id="editTaskIntegral" parameterType="Task">
+		update task set
+		task_integral = #{task_integral}
+		where task_id = #{task_id}
+	</update>
 </mapper>
