@@ -1,0 +1,243 @@
+
+/* reset */
+.main-wrap{
+    width: 100%;
+}
+.sidebar{
+    padding-top: 10px;
+}
+.node-data{
+    text-align: center;
+    position: relative;
+}
+.node-data span{
+    font-size: 14px;
+    color: rgb(100, 99, 99);
+    position: relative;
+    padding: 0 10px;
+}
+.node-data span::after{
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #A6A6A6;
+    position: absolute;
+    left: -100%;
+    top: 50%;
+}
+.node-data span::before{
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #A6A6A6;
+    position: absolute;
+    right: -100%;
+    top: 50%;
+}
+.card-body .d-block{
+    color: #B5B5B5;
+    padding:5px 0;
+    cursor: pointer;
+}
+/* 顶部 */
+.navbar{
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #1cc09f;
+    padding: 0;
+    z-index: 99;    
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.08);
+}
+.navbar-header{
+    float: left;
+    height: 60px;
+}
+.navbar-brand{
+    display: inline-flex;
+    box-sizing: border-box;
+    align-items: center;
+    width: 200px;
+    height: 100%;
+    padding: 0 15px;
+    margin: 0 !important;
+    background: #283643;
+}
+.navbar-brand .icon{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: url('../img/logo.jpg') no-repeat center center;
+    background-size:100% 100%;
+}
+.navbar-brand .font{
+    margin-left: 10px;
+    color: #fff;
+}
+/* 侧边栏 */
+.box-content-left{
+    width: 200px;
+    position: fixed;
+    left: 0;
+    top: 60px;
+    z-index: 99;
+}
+.box-l-li{
+    border-bottom: 1px solid rgba(107, 108, 109, 0.19);
+}
+.box-l-li .box-card{
+    padding:0;
+}
+.box-card{
+    display: block;
+    color: #B5B5B5;
+}
+.box-l-li a{
+    color: #B5B5B5;
+}
+.box-l-li.list-action{
+    background: #1cc09f;
+}
+.box-l-li.list-action a{
+    color: #fff !important;
+}
+.nav-view{
+    padding: 12px 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left:30px;
+    cursor: pointer;
+}
+.nav-view:not(.collapsed){
+    background-color: #1CC09F;
+    color: #fff !important;
+}
+.nav-view .nav-icon{
+    padding-right: 10px;
+    font-size: 16px;
+}
+/* 主体内容 */
+
+/* 头像 */
+.pic-wrap .head-pic img{
+    width: 40px;
+    display: inline-block;
+}
+/* 状态 */
+.card .right .rounded em{
+    font-weight: normal;
+    font-size: 16px;
+    font-style: normal;
+    padding-right: 5px;
+}
+.state {
+    margin: .5rem;
+    padding: 0px .5rem;;
+}
+.card-state-1 .state{
+    color: #333;
+    background-color: #fff;
+    border-right:1px solid #ccc;
+}
+.card-state-2 .state{
+    color: #FFC107;
+    border-right:1px solid #FFC107;
+}
+.card-state-3 .state{
+    color: #337ab7;
+    border-right:1px solid #337ab7;
+}
+.card-state-4 .state{
+    color: #5cb85c;
+    border-right:1px solid #4cae4c;
+}
+.card .right .active-state{
+    min-width: 67px;
+    border: none;
+    color: #fff;
+}
+.card-state-1 .right .active-state{
+    color: #333;
+    background-color: #fff;
+    border:1px solid #ccc;
+}
+.card-state-2 .right .active-state{
+    background-color: #FFC107;
+    border:1px solid #FFC107;
+}
+.card-state-3 .right .active-state{
+    background-color: #337ab7;
+    border:1px solid #337ab7;
+}
+.card-state-4 .right .active-state{
+    background-color: #4cae4c;
+    border:1px solid #4cae4c;
+    
+}
+
+
+
+.box-content{
+    width: 100%;
+    margin:0;
+    position: relative;
+    top: 60px;
+    box-sizing: border-box;
+    padding-left: 200px;
+}
+
+.box-content-right{
+    width: 100%;
+    min-height: 1200px;
+    padding: 0 0 20px 0;
+    background: #f3f3f3;
+    margin: 0 !important;
+}
+.pro-wrap{
+    padding: 20px;
+}
+.pro-wrapper{
+    border-bottom: 2px dashed #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    
+}
+.pro-box{
+    background-color: #fff;
+    padding: 20px;
+}
+
+.pro-wrapper .pro-title{
+    font-size: 16px;
+}
+
+.pro-wrapper .time{
+    font-size: 12px;
+    color: #A6A6A6;
+    padding-left: 10px;
+}
+.pro-wrapper .intgarl{
+    font-size: 12px;
+    color: #000;
+    padding-left: 10px;
+    margin-left: auto;
+}
+.list-wrap{
+    margin-top: 20px;
+}
+.pro-box .btn-info{
+    background: rgb(89, 161, 224);
+}
+.pro-box .btn-primary{
+    background: rgb(89, 161, 224);
+}

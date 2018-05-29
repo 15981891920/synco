@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>摩客积分</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="Plugins/bootstrap/bootstrap.min.css" />
+    <link href="Plugins/bootstrap/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link href="img/favicon.ico" rel="SHORTCUT ICON">
+
+    <script type="text/javascript" src="Plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="Plugins/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Plugins/app.js"></script>
+    <script src="Plugins/echarts.simple.min.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- 顶部 -->
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">
+                    <i class="icon"></i>
+                    <strong class="font">MASTER</strong>
+                </a>
+            </div>
+        </nav>
+        <div class="row box-content">
+            <div class="box-content-left col-lg-2">
+                <aside class="main-sidebar sidebar-dark-primary elevation-4" style="max-height: 766px;">
+                    <!-- Sidebar -->
+                    <div class="sidebar">
+                        <!-- Brand Logo -->
+                        <div id="accordion" class="text-center">
+
+                            <div class="box-l-li list-action">
+                                <div class="box-card" id="headingOne">
+                                    <a class="mb-0" href="board.html">
+                                        <div class="nav-view collapsed">
+                                            <i class="nav-icon fa fa-dashboard"></i>
+                                            <span>仪表盘</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="box-l-li">
+                                <div class="box-card" id="headingTwo">
+                                    <a class="mb-0"  href="index.html">
+                                        <div class="nav-view collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            <i class="nav-icon fa fa-th"></i>
+                                            <span>任务列表</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                    <ul class="card-body ">
+                                        <li class="d-block" data-type="3">
+                                            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                            参与项目
+                                        </li>
+                                        <li class="d-block" data-type="2">
+                                            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                            负责项目
+                                        </li>
+                                        <li class="d-block" data-type="1">
+                                            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                            历史项目
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            <div class="box-content-right row">
+                <div class="main-wrap">
+                    <!-- 主内容区 -->
+                    <div class="col-md-10">
+                        <div class="main-wrap d-flex">
+                            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                            <div id="main-canvas" style="width: 600px;height:400px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="Plugins/art-template.js"></script>
+    <script type="text/javascript" src="js/board.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</body>
+
+</html>
